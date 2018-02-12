@@ -180,6 +180,7 @@ return [
         
         App\Providers\ObjectLifecycleProvider::class,
         App\Providers\TwitchApiServiceProvider::class,
+        App\Providers\ViewHelperServiceProvider::class,
 
     ],
 

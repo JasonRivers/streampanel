@@ -15,6 +15,7 @@ class RelayDisable extends Command
     protected $signature = '
         relay:disable
         {relay : The ID of a relay to disable}
+        {--a|async : Asynchronous}
     ';
 
     /**
@@ -48,6 +49,6 @@ class RelayDisable extends Command
         }
         
         $this->info('Disabling relay');
-        $relay->disable();
+        $relay->disable($this->option('async'));
     }
 }

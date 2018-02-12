@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/login', 'AuthController@login')->name('login');
+Route::post('/login', 'AuthController@do_login')->name('login.complete');
+Route::get('/logout', 'AuthController@logout')->name('logout');
+
+Route::resource('relays', 'RelayController');

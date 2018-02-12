@@ -121,6 +121,14 @@ class Relay extends Model
         return $this->hasMany('App\TwitchChannel');
     }
     
+    public function isLive()
+    {
+        if ($this->source_started_at) {
+            return true;
+        }
+        return false;
+    }
+    
     public function setState($code)
     {
         $this->log()->info("Updating state to {$code}");

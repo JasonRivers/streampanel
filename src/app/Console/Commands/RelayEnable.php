@@ -1,39 +1,54 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Console\Commands;
 
-// Internals
+use Illuminate\Console\Command;
 use App\Relay;
 
-// Externals
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-
-class RelayEnable implements ShouldQueue
+class RelayEnable extends Command
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $relay;
     /**
-     * Create a new job instance.
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = '
+        relay:enable
+        {relay : The ID of a relay to enable}
+        {--a|async : Asynchronous}
+    ';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Enable the specified relay';
+
+    /**
+     * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Relay $relay)
+    public function __construct()
     {
-        $this->relay = $relay;
+        parent::__construct();
     }
 
     /**
-     * Execute the job.
+     * Execute the console command.
      *
-     * @return void
+     * @return mixed
      */
     public function handle()
     {
-        $this->relay->enable();
+        $relay = Relay::find($this->argument('relay'));
+        if (!$relay) {
+            $this->error('Unable to find relay');
+            return;
+        }
+        
+        $this->info('Enabling relay');
+        $relay->enable($this->option('async'));
     }
 }

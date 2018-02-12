@@ -16,7 +16,8 @@ class RelayUpdate extends Command
     protected $signature = '
         relay:update
         {relay? : The ID of a relay to update}
-        {--force=false : Force an update regardless of last update}
+        {--f|force : Force an update regardless of last update}
+        {--a|async : Asynchronous}
     ';
 
     /**
@@ -53,10 +54,11 @@ class RelayUpdate extends Command
             $cutoff = Carbon::now()->subMinute();
             $query->where('last_updated_at', '<=', $cutoff);
         }
-        $query->chunk(10, function ($chunk) {
+        $async = $this->option('async');
+        $query->chunk(10, function ($chunk) use ($async) {
             foreach ($chunk as $relay) {
                 $this->info("Updating {$relay}");
-                $relay->updateStatus();
+                $relay->updateStatus($async);
             }
         });
     }

@@ -25,20 +25,20 @@
         <link rel="stylesheet" href="/css/streampanel.css">
         @yield('head')
     </head>
-    <body>
+    <body class="">
         <header>
-            <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+            <nav class="navbar fixed-top navbar-expand-lg navbar-dark  deep-purple darken-1 scrolling-navbar">
                 <a class="navbar-brand" href="{{ route('home') }}"><strong>Stream Panel</strong></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
+                        <li class="nav-item {{ isset($nav) && $nav == 'home' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('home') }}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('positions.index') }}">Streams</a>
+                        <li class="nav-item {{ isset($nav) && $nav == 'relays' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('relays.index') }}">Relays</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto nav-flex-icons">
@@ -52,7 +52,7 @@
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('auth.epic') }}">Login</a>
+                                <a class="nav-link" href="{{ route('login') }}">Login</a>
                             </li>
                         @endauth
                     </ul>
